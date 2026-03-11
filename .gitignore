@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Vector store data
+.chroma/
+chroma_db/
+
+# Output files
+output/*.pdf
+output/*.docx
+output/*.txt
+output/*.md
+
+# User documents (keep the folder, not content)
+docs/*.pdf
+docs/*.docx
+docs/*.txt
+docs/*.doc
+
+# OS
+.DS_Store
+Thumbs.db
