@@ -1,4 +1,8 @@
-# Skill: interview-technical
+---
+name: interview-technical
+description: Run Android technical interview prep — baseline assessment, question banks, and system design practice.
+disable-model-invocation: true
+---
 
 Run Android technical interview prep: baseline assessment, question banks, and practice loops.
 

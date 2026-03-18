@@ -1,4 +1,8 @@
-# Skill: resume-build
+---
+name: resume-build
+description: Build a master resume (base-resume.md) from raw career documents — brag docs, performance reviews, old resumes, or freeform notes.
+disable-model-invocation: true
+---
 
 Build a master resume from raw career documents. This is the source-of-truth artifact that all tailored resumes derive from.
 
@@ -82,4 +86,4 @@ Incorporate corrections. This final version is the master resume.
 
 ## Output Contract
 
-Deliver: a single Markdown document titled `master-resume.md` (or equivalent) that is complete, factual, and ready to be used as input to `resume-tailor`.
+Deliver: a single Markdown document titled `base-resume.md` (or equivalent) that is complete, factual, and ready to be used as input to `resume-tailor`.

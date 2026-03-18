@@ -1,4 +1,8 @@
-# Skill: career-plan
+---
+name: career-plan
+description: Analyze career position, identify skill gaps against target roles, and produce a concrete learning and job search roadmap.
+disable-model-invocation: true
+---
 
 Analyze career position, identify skill gaps against target roles, and produce a concrete learning and job search roadmap.
 

@@ -1,51 +1,37 @@
-# career-bot
+# Career Bot
 
-An agentic AI assistant for navigating a job search — from building resumes to preparing for interviews.
+A Claude Code agent that helps software engineers navigate their job search. It turns raw career materials (brag docs, performance reviews, old resumes) into polished outputs and provides structured interview preparation.
 
-## What It Does
+## Setup
 
-- **Resume building** — Generate polished, well-structured resumes from raw notes and career documents
-- **Resume tailoring** — Adapt resumes to specific job postings, surfacing the most relevant experience and skills
-- **Interview preparation** — Behavioral coaching, STAR story refinement, technical prep, and system design practice
-- **Career planning** — Skill gap analysis, learning roadmaps, and path exploration
+1. Clone this repo
+2. Copy `user-profile.template.md` to `user-profile.md` and fill in your details
+3. Open the project with [Claude Code](https://claude.com/claude-code)
 
-## How to Use
+The agent reads `user-profile.md` at the start of each session to tailor its guidance. If the file doesn't exist, it will ask you onboarding questions instead.
 
-1. Clone this repo (or click "Use this template" on GitHub)
-2. Open the directory in [Claude Code](https://claude.ai/code)
-3. Optionally fill in your profile (see [SETUP.md](SETUP.md))
-4. Start a session — the agent will introduce itself and guide you from there
+## Skills
 
-See [SETUP.md](SETUP.md) for the full setup guide, including how to keep your personal career documents in a separate private repo.
+| Skill | Slash command | What it does |
+|---|---|---|
+| **Resume Build** | `/resume-build` | Extracts achievements from raw docs and assembles a master resume (`base-resume.md`) |
+| **Resume Tailor** | `/resume-tailor` | Analyzes a job description against your resume and suggests targeted improvements |
+| **Interview Behavioral** | `/interview-behavioral` | Builds a STAR story bank and runs mock behavioral interviews |
+| **Interview Technical** | `/interview-technical` | Runs technical interview prep — baseline assessment, question banks, system design practice |
+| **Career Plan** | `/career-plan` | Skill gap analysis and week-by-week learning roadmap for a target role |
 
-## Approach
+## Output Format
 
-The agent uses a persona defined in `CLAUDE.md` and a set of slash commands in `.claude/commands/` — one per workflow mode. No build step, no install, no tooling required. Clone and go.
+Resume files are produced as Markdown with YAML front matter, designed to be consumed by downstream conversion tools (e.g., PDF pipelines). See the Output Format section in `CLAUDE.md` for the full specification.
 
 ## Project Structure
 
 ```
-career-bot/
-├── CLAUDE.md                    # Agent persona and behavior (auto-loaded by Claude Code)
-├── agent.md                     # Human-readable reference copy of the agent definition
-├── README.md                    # This file
-├── SETUP.md                     # Step-by-step onboarding guide
-├── user-profile.template.md     # Copy → user-profile.md and fill in
-├── .gitignore                   # Prevents personal docs from being committed
-└── .claude/
-    └── commands/
-        ├── resume-build.md
-        ├── resume-tailor.md
-        ├── interview-behavioral.md
-        ├── interview-technical.md
-        └── career-plan.md
+.
+├── CLAUDE.md                    # Agent definition
+├── .claude/skills/              # Skill workflows
+├── user-profile.template.md     # Profile template (copy to user-profile.md)
+├── base-resume.md               # Master resume (created by resume-build)
+├── resume-<company>.md          # Tailored variants (created by resume-tailor)
+└── source-material/             # Raw input docs (brag docs, old resumes, JDs)
 ```
-
-## For Contributors
-
-This repo is the public agent — no personal career documents live here. If you want to keep your own docs version-controlled, see the two-repo model described in [SETUP.md](SETUP.md).
-
-## Tech Stack
-
-- Claude (Anthropic) — core LLM powering the agent
-- Claude Code — runtime environment

@@ -23,21 +23,71 @@ Use these answers to tailor all outputs — resume language, interview focus are
 
 ---
 
+## Workspace
+
+- Resume content lives as `*.md` files in the project root. The base resume is `base-resume.md`.
+- Variant resumes follow the naming convention `resume-<company>.md`.
+- Raw source materials (brag docs, old resumes, job descriptions) live in `source-material/`.
+
+---
+
+## Output Format
+
+All resume `.md` files produced by this agent must use a consistent Markdown structure so they can be consumed by downstream conversion tools (e.g., Pandoc-based PDF pipelines).
+
+- YAML front matter with `title` (required), `contact` (required), and optionally `papersize`
+- `##` (H2) for top-level sections (Summary, Skills, Experience, Education)
+- `###` (H3) for entries within sections (company/role lines)
+- No `#` (H1) headings in the body — the `title` front matter variable handles the name
+- No `---` thematic breaks in the body
+- Body content is standard Markdown: bullet lists, bold, italic, inline formatting
+
+Example:
+```markdown
+---
+title: Jane Smith
+contact: "New York | 555-0100 | jane@example.com | linkedin.com/in/jane"
+---
+
+## Summary
+
+Senior engineer with 8 years of experience...
+
+## Experience
+
+### Acme Corp, Senior Engineer // Jan 2022 – Present
+
+- Led migration of legacy system to microservices
+```
+
+Before modifying any `resume-*.md`, read it and verify it conforms to this structure.
+
+---
+
 ## Modes
 
 Infer the appropriate mode from user input. State which mode you're entering and what you'll do first.
 
-| Mode | Trigger | Slash command |
-|---|---|---|
-| `resume-build` | User provides raw docs (brag doc, perf review, old resume, notes) | `/resume-build` |
-| `resume-tailor` | User provides a job posting or JD | `/resume-tailor` |
-| `interview-behavioral` | User wants behavioral prep, STAR coaching, or mock interview | `/interview-behavioral` |
-| `interview-technical` | User wants technical prep, system design, or quiz mode | `/interview-technical` |
-| `career-plan` | User wants skill gap analysis, learning roadmap, or path exploration | `/career-plan` |
+| Mode | Trigger | Slash command | Done when |
+|---|---|---|---|
+| `resume-build` | User provides raw docs (brag doc, perf review, old resume, notes) | `/resume-build` | `base-resume.md` written, user confirms no fabricated metrics |
+| `resume-tailor` | User provides a job posting or JD | `/resume-tailor` | User has reviewed and approved suggested changes, updated resume written |
+| `interview-behavioral` | User wants behavioral prep, STAR coaching, or mock interview | `/interview-behavioral` | User has practiced ≥3 STAR stories covering the target role's stated requirements |
+| `interview-technical` | User wants technical prep, system design, or quiz mode | `/interview-technical` | User has worked through the key topic areas identified for the target role |
+| `career-plan` | User wants skill gap analysis, learning roadmap, or path exploration | `/career-plan` | User has a prioritized action list with concrete next steps |
 
-When a mode requires a prerequisite (e.g., `resume-tailor` requires a master resume), check whether it exists. If not, prompt the user to either provide one or switch to `resume-build` first.
+When a mode requires a prerequisite, check whether it exists. For `resume-tailor`, the skill itself will prompt the user for all required inputs (job description, current resume, optional supplementary docs) — no specific file needs to exist beforehand.
 
-When the appropriate mode is identified, tell the user which slash command to run to load the full workflow. Do not improvise the workflow steps — wait for the skill to be loaded.
+When the appropriate mode is identified, output a context block to carry accumulated context into the skill:
+
+```
+**Target role:** <title, company, seniority>
+**Key requirements to address:** <bullet list from JD or user input>
+**Source material available:** <list of files or docs>
+**Constraints:** <anything from user-profile.md relevant to this task>
+```
+
+Then tell the user which slash command to run. Do not improvise the workflow steps — wait for the skill to be loaded.
 
 ---
 

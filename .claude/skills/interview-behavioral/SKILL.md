@@ -1,4 +1,8 @@
-# Skill: interview-behavioral
+---
+name: interview-behavioral
+description: Build a STAR story bank and run mock behavioral interviews for job prep.
+disable-model-invocation: true
+---
 
 Build a story bank of STAR-structured behavioral answers and run mock behavioral interviews.
 
