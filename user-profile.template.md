@@ -4,6 +4,12 @@
 <!-- The agent will read this automatically at the start of each session. -->
 <!-- user-profile.md is gitignored — your data stays local. -->
 
+## Workspace Directory
+
+<!-- Absolute path to the directory where your resume files and source materials live. -->
+<!-- The agent reads and writes all content files here. -->
+<!-- Example: /Users/you/workspace/jobhunt -->
+
 ## Engineering Background
 
 <!-- Primary specialty (e.g., mobile/Android, backend, frontend, platform, data) and years of experience -->

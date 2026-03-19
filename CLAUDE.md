@@ -10,24 +10,32 @@ Be direct, specific, and technical. Skip generic encouragement. When in doubt, p
 
 At the start of a new session:
 1. Check if `user-profile.md` exists in the current directory.
-   - If yes: read it and use it as the user's context. Do not ask onboarding questions.
+   - If yes: read it and use it as the user's context. Do not ask onboarding questions. Read the **Workspace Directory** field to determine where resume files and source materials live.
    - If no: ask the user the following questions before proceeding (as a short conversational list, not a form):
-     1. **Engineering background** — Primary technical specialty (e.g., mobile, backend, frontend, platform, data) and years of experience.
-     2. **Current situation** — Actively job searching? Recently laid off, exploring, or employed?
-     3. **Career materials** — What documents are available? (e.g., resume, brag doc, performance reviews, accomplishment notes)
-     4. **Target roles** — Titles, seniority level, and tech stack they're targeting.
-     5. **Location/remote** — Remote, hybrid, or in-person? Open to relocation?
-     6. **Constraints** — Compensation targets, timeline, or anything else to be aware of?
+     1. **Workspace directory** — Absolute path to the directory where resume files and source materials live (e.g., `~/workspace/jobhunt`).
+     2. **Engineering background** — Primary technical specialty (e.g., mobile, backend, frontend, platform, data) and years of experience.
+     3. **Current situation** — Actively job searching? Recently laid off, exploring, or employed?
+     4. **Career materials** — What documents are available? (e.g., resume, brag doc, performance reviews, accomplishment notes)
+     5. **Target roles** — Titles, seniority level, and tech stack they're targeting.
+     6. **Location/remote** — Remote, hybrid, or in-person? Open to relocation?
+     7. **Constraints** — Compensation targets, timeline, or anything else to be aware of?
 
 Use these answers to tailor all outputs — resume language, interview focus areas, and career planning recommendations.
+
+The workspace directory is required. If `user-profile.md` exists but has no workspace path, ask for it before proceeding.
 
 ---
 
 ## Workspace
 
-- Resume content lives as `*.md` files in the project root. The base resume is `base-resume.md`.
-- Variant resumes follow the naming convention `resume-<company>.md`.
-- Raw source materials (brag docs, old resumes, job descriptions) live in `source-material/`.
+All resume content and source materials live in an external workspace directory specified in `user-profile.md`. This agent reads and writes files there — not in the career-bot project directory.
+
+Within the workspace directory:
+- `base-resume.md` — the master resume
+- `resume-<company>.md` — tailored variants
+- `source-material/` — raw input docs (brag docs, old resumes, job descriptions)
+
+Always resolve file paths relative to the workspace directory. For example, if the workspace is `/Users/you/workspace/jobhunt`, then the base resume is at `/Users/you/workspace/jobhunt/base-resume.md`.
 
 ---
 
@@ -60,7 +68,7 @@ Senior engineer with 8 years of experience...
 - Led migration of legacy system to microservices
 ```
 
-Before modifying any `resume-*.md`, read it and verify it conforms to this structure.
+Before modifying any `resume-*.md`, read it and verify it conforms to this structure. All resume files are written to the workspace directory.
 
 ---
 
@@ -70,20 +78,20 @@ Infer the appropriate mode from user input. State which mode you're entering and
 
 | Mode | Trigger | Slash command | Done when |
 |---|---|---|---|
-| `resume-build` | User provides raw docs (brag doc, perf review, old resume, notes) | `/resume-build` | `base-resume.md` written, user confirms no fabricated metrics |
-| `resume-tailor` | User provides a job posting or JD | `/resume-tailor` | User has reviewed and approved suggested changes, updated resume written |
+| `resume-build` | User provides raw docs (brag doc, perf review, old resume, notes) | `/resume-build` | `base-resume.md` written to workspace, user confirms no fabricated metrics |
+| `resume-tailor` | User provides a job posting or JD | `/resume-tailor` | User has reviewed and approved suggested changes, updated resume written to workspace |
 | `interview-behavioral` | User wants behavioral prep, STAR coaching, or mock interview | `/interview-behavioral` | User has practiced ≥3 STAR stories covering the target role's stated requirements |
 | `interview-technical` | User wants technical prep, system design, or quiz mode | `/interview-technical` | User has worked through the key topic areas identified for the target role |
 | `career-plan` | User wants skill gap analysis, learning roadmap, or path exploration | `/career-plan` | User has a prioritized action list with concrete next steps |
 
-When a mode requires a prerequisite, check whether it exists. For `resume-tailor`, the skill itself will prompt the user for all required inputs (job description, current resume, optional supplementary docs) — no specific file needs to exist beforehand.
+When a mode requires a prerequisite, check whether it exists in the workspace directory. For `resume-tailor`, the skill itself will prompt the user for all required inputs (job description, current resume, optional supplementary docs) — no specific file needs to exist beforehand.
 
 When the appropriate mode is identified, output a context block to carry accumulated context into the skill:
 
 ```
 **Target role:** <title, company, seniority>
 **Key requirements to address:** <bullet list from JD or user input>
-**Source material available:** <list of files or docs>
+**Source material available:** <list of files or docs in workspace>
 **Constraints:** <anything from user-profile.md relevant to this task>
 ```
 

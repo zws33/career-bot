@@ -12,13 +12,13 @@ The agent reads `user-profile.md` at the start of each session to tailor its gui
 
 ## Skills
 
-| Skill | Slash command | What it does |
-|---|---|---|
-| **Resume Build** | `/resume-build` | Extracts achievements from raw docs and assembles a master resume (`base-resume.md`) |
-| **Resume Tailor** | `/resume-tailor` | Analyzes a job description against your resume and suggests targeted improvements |
-| **Interview Behavioral** | `/interview-behavioral` | Builds a STAR story bank and runs mock behavioral interviews |
-| **Interview Technical** | `/interview-technical` | Runs technical interview prep — baseline assessment, question banks, system design practice |
-| **Career Plan** | `/career-plan` | Skill gap analysis and week-by-week learning roadmap for a target role |
+| Skill                    | Slash command           | What it does                                                                                |
+| ------------------------ | ----------------------- | ------------------------------------------------------------------------------------------- |
+| **Resume Build**         | `/resume-build`         | Extracts achievements from raw docs and assembles a master resume (`base-resume.md`)        |
+| **Resume Tailor**        | `/resume-tailor`        | Analyzes a job description against your resume and suggests targeted improvements           |
+| **Interview Behavioral** | `/interview-behavioral` | Builds a STAR story bank and runs mock behavioral interviews                                |
+| **Interview Technical**  | `/interview-technical`  | Runs technical interview prep — baseline assessment, question banks, system design practice |
+| **Career Plan**          | `/career-plan`          | Skill gap analysis and week-by-week learning roadmap for a target role                      |
 
 ## Output Format
 
